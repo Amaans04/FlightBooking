@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../apiConfig";
 
 function AIAssistant() {
   const [messages, setMessages] = useState([]);
@@ -17,7 +18,7 @@ function AIAssistant() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5050/api/ai",
+        `${API_BASE_URL}/api/ai`,
         { question: input }
       );
 

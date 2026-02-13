@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../apiConfig";
 
 function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -14,7 +15,7 @@ function MyBookings() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:5050/api/bookings?userId=${user._id}`
+          `${API_BASE_URL}/api/bookings?userId=${user._id}`
         );
         setBookings(res.data);
       } catch (err) {

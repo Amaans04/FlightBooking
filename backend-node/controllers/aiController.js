@@ -1,5 +1,8 @@
 const axios = require("axios");
 
+const AI_SERVICE_URL =
+  process.env.AI_SERVICE_URL || "http://localhost:8001/ai/query";
+
 exports.askAI = async (req, res) => {
   try {
     const { question } = req.body;
@@ -8,10 +11,7 @@ exports.askAI = async (req, res) => {
       return res.status(400).json({ error: "Question is required" });
     }
 
-    const response = await axios.post(
-      "http://localhost:8001/ai/query",
-      { question }
-    );
+    const response = await axios.post(AI_SERVICE_URL, { question });
 
     return res.status(200).json(response.data);
 
