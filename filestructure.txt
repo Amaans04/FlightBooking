@@ -1,0 +1,41 @@
+flight-booking-ai/
+│
+├── backend-node/
+│   ├── server.js
+│   ├── config/
+│   │   └── db.js
+│   ├── models/
+│   │   ├── Flight.js
+│   │   ├── User.js
+│   │   └── Booking.js
+│   ├── routes/
+│   │   ├── flightRoutes.js
+│   │   ├── bookingRoutes.js
+│   │   └── aiProxyRoutes.js
+│   ├── controllers/
+│   │   ├── flightController.js
+│   │   ├── bookingController.js
+│   │   └── aiController.js
+│   └── services/
+│       └── pricingService.js
+│
+├── ai-service-python/
+│   ├── main.py
+│   ├── rag_service.py
+│   ├── config.py
+│   ├── requirements.txt
+│   └── data/
+│       └── airline_policies.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── SearchFlights.jsx
+│   │   │   ├── BookFlight.jsx
+│   │   │   ├── MyBookings.jsx
+│   │   │   └── AIAssistant.jsx
+│   │   ├── components/
+│   │   └── App.js
+│   └── package.json
+│
+└── README.md
