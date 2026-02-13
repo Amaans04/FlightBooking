@@ -1,6 +1,7 @@
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_google_genai import ChatGoogleGenerativeAI
 from pinecone import Pinecone
+from pinecone.exceptions import NotFoundException
 from config import GOOGLE_API_KEY, PINECONE_API_KEY, PINECONE_INDEX_NAME
 from langchain_pinecone import PineconeVectorStore
 
@@ -33,15 +34,25 @@ embeddings = GoogleGenerativeAIEmbeddings(
     google_api_key=GOOGLE_API_KEY,
 )
 
-# Initialize Pinecone
+# Initialize Pinecone client (lightweight, no API call)
 pc = Pinecone(api_key=PINECONE_API_KEY)
-index = pc.Index(PINECONE_INDEX_NAME)
+_index = None
+
+
+def _get_index():
+    """Lazy-init Pinecone index to avoid startup crash if index doesn't exist yet."""
+    global _index
+    if _index is None:
+        if not PINECONE_INDEX_NAME:
+            raise ValueError("PINECONE_INDEX_NAME environment variable is not set")
+        _index = pc.Index(PINECONE_INDEX_NAME)
+    return _index
 
 
 def _namespace_vector_count(namespace: str) -> int:
     """Return the number of vectors in the given namespace, or 0 if empty/missing."""
     try:
-        stats = index.describe_index_stats()
+        stats = _get_index().describe_index_stats()
     except Exception as e:
         raise RuntimeError(f"Failed to get Pinecone index stats: {e}") from e
     namespaces = getattr(stats, "namespaces", None) or {}
@@ -51,10 +62,13 @@ def _namespace_vector_count(namespace: str) -> int:
     return getattr(ns_summary, "vector_count", 0) or 0
 
 
-def load_and_index() -> None:
-    """Load policy text and index into Pinecone only if namespace is empty (no duplicate vectors on startup)."""
-    if _namespace_vector_count(RAG_NAMESPACE) > 0:
+def load_and_index(force: bool = False) -> None:
+    """Load policy text and index into Pinecone. If force=False, skips when namespace already has vectors."""
+    if not force and _namespace_vector_count(RAG_NAMESPACE) > 0:
         return
+
+    if force:
+        _get_index().delete_namespace(namespace=RAG_NAMESPACE)
 
     try:
         with open("data/airline_policies.txt", "r", encoding="utf-8") as f:
@@ -71,7 +85,7 @@ def load_and_index() -> None:
     chunks = splitter.split_text(text)
 
     vector_store = PineconeVectorStore(
-        index=index,
+        index=_get_index(),
         embedding=embeddings,
         namespace=RAG_NAMESPACE,
     )
@@ -85,10 +99,15 @@ def query_rag(question: str) -> str:
 
     try:
         vectorstore = PineconeVectorStore(
-            index=index,
+            index=_get_index(),
             embedding=embeddings,
             namespace=RAG_NAMESPACE,
         )
+    except NotFoundException as e:
+        raise RuntimeError(
+            f"Pinecone index '{PINECONE_INDEX_NAME}' not found. "
+            "Create it in the Pinecone dashboard with dimension 3072 for gemini-embedding-001."
+        ) from e
     except Exception as e:
         raise RuntimeError(f"Failed to initialize vector store: {e}") from e
 
