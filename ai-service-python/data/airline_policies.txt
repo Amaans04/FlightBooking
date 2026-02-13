@@ -1,16 +1,48 @@
 Refund Policy:
 Tickets are fully refundable within 24 hours of booking.
 After 24 hours, cancellation charges apply.
+Refunds are processed within 5-7 business days to the original payment method.
 
 Baggage Policy:
 Passengers are allowed one cabin bag up to 7kg.
-Checked baggage up to 15kg is allowed.
+Cabin bag dimensions must not exceed 55cm x 35cm x 25cm.
+Checked baggage up to 15kg is allowed for economy class.
+Business class passengers get 25kg checked baggage allowance.
+Excess baggage charges are ₹500 per kg beyond the limit.
 
 Rescheduling Policy:
 Flights can be rescheduled up to 6 hours before departure.
-Rescheduling fees may apply.
+Rescheduling fees may apply: ₹500 for domestic, ₹1500 for international.
+Only one free reschedule is allowed within 24 hours of booking.
+Changes must be made through the website or mobile app.
 
-This application was build by:
-Amaan Saify
+Cancellation Policy:
+Cancel within 24 hours for full refund.
+25-72 hours before departure: 25% cancellation fee.
+72 hours to 7 days before departure: 50% cancellation fee.
+Less than 7 days: No refund, only tax recovery possible.
+
+Flight Delay and Cancellation Compensation:
+For delays over 4 hours, passengers receive meal vouchers.
+For delays over 6 hours, complimentary hotel accommodation if overnight.
+If the airline cancels the flight, full refund or alternate flight is offered.
+Force majeure (weather, strikes) may exempt compensation.
+
+No-Show Policy:
+Passengers who do not board without prior cancellation forfeit the ticket.
+No refund or reschedule is allowed for no-shows.
+Contact support at least 2 hours before departure to cancel and retain partial value.
+
+Infant and Child Policy:
+Infants under 2 years travel free on lap (one per adult).
+Children 2-12 years get 50% fare discount.
+Child seats can be requested at booking for a nominal fee.
+
+Special Assistance:
+Wheelchair assistance is free — request 48 hours before departure.
+Unaccompanied minor service available for 5-12 years at extra cost.
+Medical equipment and mobility aids carried free of charge.
+
+This application was built by: Amaan Saify
 
 
