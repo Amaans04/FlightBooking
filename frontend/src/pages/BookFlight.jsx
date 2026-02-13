@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../apiConfig";
+import api from "../api";
 
 function BookFlight() {
   const location = useLocation();
@@ -27,7 +26,7 @@ function BookFlight() {
     }
 
     try {
-      await axios.post(`${API_BASE_URL}/api/bookings`, {
+      await api.post("/api/bookings", {
         userId: user._id,
         flightId: flight._id,
         seatsBooked: seats,

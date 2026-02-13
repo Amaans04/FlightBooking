@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../apiConfig";
+import api from "../api";
 
 function AIAssistant() {
   const [messages, setMessages] = useState([]);
@@ -17,10 +16,7 @@ function AIAssistant() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${API_BASE_URL}/api/ai`,
-        { question: input }
-      );
+      const res = await api.post("/api/ai", { question: input });
 
       const botMessage = {
         type: "bot",

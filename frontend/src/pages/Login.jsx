@@ -1,7 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../apiConfig";
 
 function Login({ onLogin }) {
   const [mode, setMode] = useState("login"); // 'login' or 'register'
@@ -16,17 +15,13 @@ function Login({ onLogin }) {
     if (!email || !password || (mode === "register" && !name)) return;
     setLoading(true);
     try {
-      const url =
-        mode === "register"
-          ? `${API_BASE_URL}/api/auth/register`
-          : `${API_BASE_URL}/api/auth/login`;
-
+      const url = mode === "register" ? "/api/auth/register" : "/api/auth/login";
       const payload =
         mode === "register"
           ? { name, email, password }
           : { email, password };
 
-      const res = await axios.post(url, payload);
+      const res = await api.post(url, payload);
       const user = res.data;
       localStorage.setItem("user", JSON.stringify(user));
       if (onLogin) onLogin(user);

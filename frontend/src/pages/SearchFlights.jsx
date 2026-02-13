@@ -1,7 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../apiConfig";
 
 function SearchFlights() {
   const [source, setSource] = useState("");
@@ -15,8 +14,8 @@ function SearchFlights() {
 
     setLoading(true);
     try {
-      const res = await axios.get(
-        `${API_BASE_URL}/api/flights?source=${source}&destination=${destination}`
+      const res = await api.get(
+        `/api/flights?source=${source}&destination=${destination}`
       );
       const data = Array.isArray(res.data) ? res.data : [];
       // Sort by price ascending for a nicer UX
